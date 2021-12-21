@@ -1,3 +1,3 @@
-# Riot API
+# riot-lib
 
 Work in Progress...
