@@ -1,0 +1,14 @@
+[package]
+edition = "2021"
+name = "riot_api"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11.7", features = ["blocking", "json"] }
+serde = { version = "1.0.132", features = ["derive"] }
+serde_json = "1.0.73"
+
+[dev-dependencies]
+dotenv = "0.15.0"
