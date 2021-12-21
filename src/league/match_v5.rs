@@ -295,35 +295,35 @@ impl MatchV5 {
             s.push_str(&opt);
         }
         if let Some(val) = options.count {
-            if !s.ends_with('&') && !s.ends_with('?') {
+            if !s.ends_with('&') {
                 s.push('&');
             }
             let opt = format!("count={}", val);
             s.push_str(&opt);
         }
         if let Some(val) = options.queue {
-            if !s.ends_with('&') && !s.ends_with('?') {
+            if !s.ends_with('&') {
                 s.push('&');
             }
             let opt = format!("queue={}", val);
             s.push_str(&opt);
         }
         if let Some(val) = options.match_type {
-            if !s.ends_with('&') && !s.ends_with('?') {
+            if !s.ends_with('&') {
                 s.push('&');
             }
             let opt = format!("type={}", val);
             s.push_str(&opt);
         }
         if let Some(val) = options.start_time {
-            if !s.ends_with('&') && !s.ends_with('?') {
+            if !s.ends_with('&') {
                 s.push('&');
             }
             let opt = format!("startTime={}", val);
             s.push_str(&opt);
         }
         if let Some(val) = options.end_time {
-            if !s.ends_with('&') && !s.ends_with('?') {
+            if !s.ends_with('&') {
                 s.push('&');
             }
             let opt = format!("endTime={}", val);
