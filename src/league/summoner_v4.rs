@@ -3,13 +3,13 @@ use reqwest::{
     header::{HeaderMap, HeaderValue},
     StatusCode,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 pub use crate::{error::Error, Platform};
 
-#[derive(Deserialize, Debug)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct SummonerResponse {
+pub struct Response {
     pub id: String,
     pub account_id: String,
     pub puuid: String,
@@ -40,7 +40,7 @@ impl SummonerV4 {
         Self { client, endpoint }
     }
 
-    fn invoke(&self, url: &str) -> Result<SummonerResponse, Error> {
+    fn invoke(&self, url: &str) -> Result<Response, Error> {
         let request = self.client.get(url);
         let response = request.send();
         if let Err(error) = response {
@@ -53,7 +53,7 @@ impl SummonerV4 {
             return Err(Error::StatusCode(response.status()));
         }
 
-        match response.json::<SummonerResponse>() {
+        match response.json::<Response>() {
             Ok(val) => Ok(val),
             Err(err) => Err(Error::new_message(&format!(
                 "Couldn't Deserialize:\n{}",
@@ -62,22 +62,22 @@ impl SummonerV4 {
         }
     }
 
-    pub fn by_account(&self, encrypted_account_id: &str) -> Result<SummonerResponse, Error> {
+    pub fn by_account(&self, encrypted_account_id: &str) -> Result<Response, Error> {
         let url = format!("{}/by-account/{}", self.endpoint, encrypted_account_id);
         self.invoke(&url)
     }
 
-    pub fn by_name(&self, summoner_name: &str) -> Result<SummonerResponse, Error> {
+    pub fn by_name(&self, summoner_name: &str) -> Result<Response, Error> {
         let url = format!("{}/by-name/{}", self.endpoint, summoner_name);
         self.invoke(&url)
     }
 
-    pub fn by_puuid(&self, encrypted_puuid: &str) -> Result<SummonerResponse, Error> {
+    pub fn by_puuid(&self, encrypted_puuid: &str) -> Result<Response, Error> {
         let url = format!("{}/by-puuid/{}", self.endpoint, encrypted_puuid);
         self.invoke(&url)
     }
 
-    pub fn by_summoner_id(&self, summoner_name: &str) -> Result<SummonerResponse, Error> {
+    pub fn by_summoner_id(&self, summoner_name: &str) -> Result<Response, Error> {
         let url = format!("{}/{}", self.endpoint, summoner_name);
         self.invoke(&url)
     }
