@@ -290,7 +290,6 @@ impl MatchV5 {
 
     fn stringify_options(options: ByPUUIDOptions) -> String {
         let mut s = String::new();
-        s.push('?');
         if let Some(val) = options.start {
             let opt = format!("start={}", val);
             s.push_str(&opt);
@@ -329,6 +328,9 @@ impl MatchV5 {
             }
             let opt = format!("endTime={}", val);
             s.push_str(&opt);
+        }
+        if !s.is_empty() {
+            s.insert(0, '?');
         }
         s
     }
@@ -399,8 +401,8 @@ mod tests {
             end_time: None,
             queue: None,
             match_type: None,
-            start: None,
-            count: None,
+            start: Some(1),
+            count: Some(100),
         };
         let res = api.by_puuid(&puuid, options).unwrap();
         println!("{:?}", res);
